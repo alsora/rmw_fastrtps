@@ -144,7 +144,7 @@ rmw_create_service(
   } else {
     subscriberParam.topic.topicName = service_name;
   }
-  subscriberParam.topic.topicName += "Request";
+  subscriberParam.topic.topicName = (subscriberParam.topic.topicName.to_string() + "Request");
 
   if (!impl->leave_middleware_default_qos) {
     publisherParam.qos.m_publishMode.kind = eprosima::fastrtps::ASYNCHRONOUS_PUBLISH_MODE;
@@ -159,7 +159,7 @@ rmw_create_service(
   } else {
     publisherParam.topic.topicName = service_name;
   }
-  publisherParam.topic.topicName += "Reply";
+  publisherParam.topic.topicName = (publisherParam.topic.topicName.to_string() + "Reply");
 
   RCUTILS_LOG_DEBUG_NAMED(
     "rmw_fastrtps_cpp",
