@@ -31,6 +31,8 @@
 #include "rcpputils/thread_safety_annotations.hpp"
 #include "rcutils/logging_macros.h"
 
+#include "fastrtps/utils/fixed_size_string.hpp"
+
 typedef eprosima::fastrtps::rtps::GUID_t GUID_t;
 
 /**
@@ -102,6 +104,17 @@ public:
     return participant_to_topics_;
   }
 
+  bool addTopic(
+    const eprosima::fastrtps::rtps::InstanceHandle_t & rtpsParticipantKey,
+    const eprosima::fastrtps::string_255 & topic_name,
+    const eprosima::fastrtps::string_255 & type_name)
+  {
+
+    return addTopic(rtpsParticipantKey, topic_name.to_string(), type_name.to_string());
+
+  }
+
+
   /**
    * Add a topic based on discovery.
    *
@@ -132,6 +145,14 @@ public:
     topic_to_types_[topic_name].push_back(type_name);
     participant_to_topics_[guid][topic_name].push_back(type_name);
     return true;
+  }
+
+  bool removeTopic(
+    const eprosima::fastrtps::rtps::InstanceHandle_t & rtpsParticipantKey,
+    const eprosima::fastrtps::string_255 & topic_name,
+    const eprosima::fastrtps::string_255 & type_name)
+  {
+    return removeTopic(rtpsParticipantKey, topic_name.to_string(), type_name.to_string());
   }
 
   /**
